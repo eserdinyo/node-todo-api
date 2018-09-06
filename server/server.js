@@ -3,22 +3,49 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true });
 
-const Todo = mongoose.model('Todo', {
+
+
+const User = mongoose.model('User', {
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 1
+    }
+})
+
+const user = new User({
+    email: "info@example.com",
+})
+
+user.save().then((res) => {
+    console.log(JSON.stringify(res, undefined, 2));
+}, err => {
+    console.log(err.message);
+
+})
+
+
+
+/* const Todo = mongoose.model('Todo', {
     text: {
         type: String,
+        required: true,
+        minlength: 1,
+        trim: true,
     },
     completed: {
-        type: Boolean
+        type: Boolean,
+        default: false,
     },
     completedAt: {
-        type: Number
+        type: Number,
+        default: null
     }
-});
+}); */
 
-const newTodo = new Todo({
-    text: 'Take a bread',
-    completed: true,
-    completedAt: 123,
+/* const newTodo = new Todo({
+    text: 'Take a ticket'
 });
 
 newTodo.save().then((res) => {
@@ -26,4 +53,4 @@ newTodo.save().then((res) => {
 
 }, e => {
     console.log('Unable to save todo');
-});
+}); */

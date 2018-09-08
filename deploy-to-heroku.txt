@@ -1,0 +1,23 @@
+### DEPLOY TO HEROKU ##
+
+1. Add port to server.js
+
+    const port = process.env.PORT || 3000;
+
+2. Add script to package.json
+
+    "start": "node server/server.js",
+
+3. Tell heroku which version node you using in package.json
+
+    "engines" : {
+        "node": "8.9.4"
+    } 
+
+4. Run the 'heroku create' on terminal
+
+5. create an account on 'https://mlab.com' for mongodb storage
+
+6. take connect link from mlab and past it into mongoose.js for connection
+
+7. Run the git push heroku master

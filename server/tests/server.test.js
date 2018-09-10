@@ -5,23 +5,11 @@ const { ObjectID } = require('mongodb');
 
 const { app } = require('./../server');
 const { Todo } = require('./../models/todo');
-
-const todos = [{
-    _id: new ObjectID(),
-    text: "First test todo"
-}, {
-    _id: new ObjectID(),
-    text: "Second test todo",
-    completed: true,
-    completedAt: 333,
-}];
+const { todos, populateTodos, users, populateUsers } = require('./seed/seed');
 
 // clean the db before test
-beforeEach((done) => {
-    Todo.deleteMany({}).then(() => {
-        return Todo.insertMany(todos);
-    }).then(() => done());
-})
+beforeEach(populateTodos);
+beforeEach(populateUsers);
 
 // we used 'done' param. 'cause this is async.
 describe('POST /todos', () => {

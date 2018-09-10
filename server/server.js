@@ -8,6 +8,7 @@ const { ObjectID } = require('mongodb');
 const { mongoose } = require('./db/mongoose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
+const { auth } = require('./middleware/authenticate');
 
 const app = express();
 const port = process.env.PORT;
@@ -92,7 +93,7 @@ app.patch('/todos/:id', (req, res) => {
 })
 
 app.post('/users', (req, res) => {
-    
+
     const body = _.pick(req.body, ['email', 'password']);
     const user = new User(body);
 
@@ -103,6 +104,12 @@ app.post('/users', (req, res) => {
     }).catch(e => {
         res.status(400).send(e);
     })
+});
+
+
+
+app.get('/users/me', auth, (req, res) => {
+    res.send(req.user);
 })
 
 app.listen(port, () => {
